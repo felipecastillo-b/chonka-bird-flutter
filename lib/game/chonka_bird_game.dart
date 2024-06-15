@@ -1,4 +1,5 @@
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flame/timer.dart';
 import 'package:myapp/components/background.dart';
 import 'package:myapp/components/chonka.dart';
@@ -6,7 +7,7 @@ import 'package:myapp/components/ground.dart';
 import 'package:myapp/components/pipe_group.dart';
 import 'package:myapp/game/configuration.dart';
 
-class ChonkaBirdGame extends FlameGame {
+class ChonkaBirdGame extends FlameGame with TapDetector{
   ChonkaBirdGame();  
 
   late Chonka chonka;
@@ -22,6 +23,11 @@ class ChonkaBirdGame extends FlameGame {
     ]);
 
     interval.onTick = () => add(PipeGroup());
+  }
+
+  @override
+  void onTap() {
+    chonka.fly();
   }
 
   @override

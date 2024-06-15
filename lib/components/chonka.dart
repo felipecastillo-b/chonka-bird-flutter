@@ -1,7 +1,10 @@
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
+import 'package:flutter/animation.dart';
 import 'package:myapp/game/assets.dart';
 import 'package:myapp/game/chonka_movement.dart';
 import 'package:myapp/game/chonka_bird_game.dart';
+import 'package:myapp/game/configuration.dart';
 
 class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<ChonkaBirdGame> {  
   Chonka();
@@ -20,5 +23,22 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
       ChonkaMovement.up: chonkaUpFlap,
       ChonkaMovement.down: chonkaDownFlap
     };
+  }
+
+  void fly(){
+    add(
+      MoveByEffect(
+      Vector2(0, Config.gravity), 
+      EffectController(duration: 0.2, curve: Curves.decelerate),
+      onComplete: () => current = ChonkaMovement.down,
+      ),
+    );
+    current = ChonkaMovement.up;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    position.y += Config.chonkaVelocity * dt;
   }
 }
