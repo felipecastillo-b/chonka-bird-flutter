@@ -32,7 +32,6 @@ class PipeGroup extends PositionComponent with HasGameRef<ChonkaBirdGame> {
 
     if (position.x < -10) {
       removeFromParent();
-      debugPrint('Removed');
     }
   }
 }

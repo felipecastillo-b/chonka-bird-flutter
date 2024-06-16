@@ -7,7 +7,7 @@ import 'package:myapp/components/ground.dart';
 import 'package:myapp/components/pipe_group.dart';
 import 'package:myapp/game/configuration.dart';
 
-class ChonkaBirdGame extends FlameGame with TapDetector{
+class ChonkaBirdGame extends FlameGame with TapDetector, HasCollisionDetection{
   ChonkaBirdGame();  
 
   late Chonka chonka;

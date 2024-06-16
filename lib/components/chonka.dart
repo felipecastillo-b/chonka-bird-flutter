@@ -1,12 +1,14 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:myapp/game/assets.dart';
 import 'package:myapp/game/chonka_movement.dart';
 import 'package:myapp/game/chonka_bird_game.dart';
 import 'package:myapp/game/configuration.dart';
 
-class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<ChonkaBirdGame> {  
+class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<ChonkaBirdGame>, CollisionCallbacks {  
   Chonka();
 
   @override
@@ -23,6 +25,8 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
       ChonkaMovement.up: chonkaUpFlap,
       ChonkaMovement.down: chonkaDownFlap
     };
+
+    add(CircleHitbox());
   }
 
   void fly(){
@@ -34,6 +38,19 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
       ),
     );
     current = ChonkaMovement.up;
+  }
+
+  @override
+  void onCollisionStart(
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
+    super.onCollisionStart(intersectionPoints, other);
+    gameOver();
+  }
+
+  void gameOver() {
+    gameRef.pauseEngine();
   }
 
   @override
