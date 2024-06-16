@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:myapp/components/pipe.dart';
 import 'package:myapp/game/chonka_bird_game.dart';
 import 'package:myapp/game/configuration.dart';
@@ -32,6 +31,11 @@ class PipeGroup extends PositionComponent with HasGameRef<ChonkaBirdGame> {
 
     if (position.x < -10) {
       removeFromParent();
+    }
+
+    if (gameRef.isHit) {
+      removeFromParent();
+      gameRef.isHit = false;
     }
   }
 }

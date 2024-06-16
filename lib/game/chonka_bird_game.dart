@@ -12,6 +12,7 @@ class ChonkaBirdGame extends FlameGame with TapDetector, HasCollisionDetection{
 
   late Chonka chonka;
   Timer interval = Timer(Config.pipeInterval, repeat: true);
+  bool isHit = false;
 
   @override
   Future<void> onLoad() async {
