@@ -16,6 +16,15 @@ class GameOverScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              'Score: ${game.chonka.score}',
+              style: const TextStyle(
+                fontSize: 60,
+                color: Colors.white,
+                fontFamily: 'Game',
+              ),
+            ),
+            const SizedBox(height: 20,),
             Image.asset(Assets.gameOver),
             const SizedBox(height: 20,),
             ElevatedButton(

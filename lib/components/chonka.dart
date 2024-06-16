@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:myapp/game/assets.dart';
@@ -10,6 +11,8 @@ import 'package:myapp/game/configuration.dart';
 
 class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<ChonkaBirdGame>, CollisionCallbacks {  
   Chonka();
+
+  int score = 0;
 
   @override
   Future<void> onLoad() async {
@@ -38,6 +41,7 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
       ),
     );
     current = ChonkaMovement.up;
+    FlameAudio.play(Assets.flying);
   }
 
   @override
@@ -51,9 +55,11 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
 
   void reset() {
     position = Vector2(50, gameRef.size.y / 2 - size.y / 2);
+    score = 0;
   }
 
   void gameOver() {
+    FlameAudio.play(Assets.collision);
     gameRef.overlays.add('gameOver');
     gameRef.pauseEngine();
     game.isHit = true;
@@ -63,5 +69,8 @@ class Chonka extends SpriteGroupComponent<ChonkaMovement> with HasGameRef<Chonka
   void update(double dt) {
     super.update(dt);
     position.y += Config.chonkaVelocity * dt;
+    if(position.y < 1) {
+      gameOver();
+    }
   }
 }
